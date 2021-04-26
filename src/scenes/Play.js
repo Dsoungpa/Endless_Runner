@@ -88,11 +88,12 @@ class Play extends Phaser.Scene {
         // make sure paddle is still alive
         if(!paddle.destroyed) {
             // check for player input
-            if(cursors.up.isDown) {
-                paddle.body.velocity.y -= paddleVelocity;
-            } else if(cursors.down.isDown) {
-                paddle.body.velocity.y += paddleVelocity;
-            }
+            paddle.y = game.input.mousePointer.y;
+            // if(cursors.up.isDown) {
+            //     paddle.body.velocity.y -= paddleVelocity;
+            // } else if(cursors.down.isDown) {
+            //     paddle.body.velocity.y += paddleVelocity;
+            // }
             // check for collisions
             this.physics.world.collide(paddle, this.barrierGroup, this.paddleCollision, null, this);
         }
