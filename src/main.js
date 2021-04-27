@@ -1,5 +1,3 @@
-//
-// Luis
 // Paddle Parkour P3
 // An endless dodging game
 // Barrier prefab adapted from Travis Faas, An Introduction to HTML5 Game Development with Phaser.js (2017)
@@ -38,6 +36,8 @@ let config = {
 let game = new Phaser.Game(config);
 
 // define globals
+let borderUISize = game.config.height / 15;
+let borderPadding = borderUISize / 3;
 let centerX = game.config.width/2;
 let centerY = game.config.height/2;
 let w = game.config.width;
