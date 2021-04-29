@@ -6,7 +6,22 @@
 
 // keep me honest
 'use strict';
-
+let health = 100;
+let healthDisplay;
+let healthConfig = {
+    fontFamily: 'Courier',
+    fontSize: '18px',
+    backgroundColor: '#8DC63F',
+    color: '#FFFFFF',
+    align: 'right',
+    padding:{
+        top: 5,
+        bottom: 5,
+    },
+    fixedWidth: 117
+}
+        
+    
 // define and configure main Phaser game object
 let config = {
     parent: 'myGame',

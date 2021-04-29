@@ -3,6 +3,12 @@ class Food extends Phaser.GameObjects.Sprite {
         super(scene, x, y, texture, frame);
         scene.add.existing(this);   // add to existing scene
         this.moveSpeed = 3;
+        this.timer = 5;
+        this.count = 0;
+    }
+
+    create() {
+        
     }
 
     update() {
@@ -13,6 +19,12 @@ class Food extends Phaser.GameObjects.Sprite {
         if(this.x <= 0 - this.width) {
             this.reset();
         }
+        
+        //let It = this.time.delayedCall(3000, speed(), [], this);
+    }
+
+    speed() {
+        this.moveSpeed += 2;
     }
 
     // position resets random
@@ -20,5 +32,14 @@ class Food extends Phaser.GameObjects.Sprite {
         this.x = game.config.width;
         var random = Phaser.Math.Between(1, 600);
         this.y = random;
+        
+        this.count = this.count + 1;
+
+        if (this.count % 5 == 0) {
+            this.speed();
+            this.count = 0;
+        }
     }
+
+    
 }
