@@ -3,62 +3,74 @@ class Title extends Phaser.Scene {
         super('titleScene');
     }
 
+    preload(){
+        // load audio
+        this.load.audio('sfx_select', './assets/audio/sound.mp3');
+        this.load.image('sky', './assets/img/Sky.png');
+        this.load.image('clouds', './assets/img/Clouds.png');
+        this.load.image('mountains', './assets/img/Mountains.png');
+        this.load.image('trees1', './assets/img/Trees1.png');
+        this.load.image('trees2', './assets/img/Trees2.png');
+        this.load.image('bar', './assets/img/HealthBar.png');
+    }
+
     create() {
-        // add title screen text
-        let title01 = this.add.bitmapText(centerX, centerY, 'gem', 'PADDLE PARKOUR P3', 64).setOrigin(0.5).setTint(0xff0000);
-        let title02 = this.add.bitmapText(centerX, centerY, 'gem', 'PADDLE PARKOUR P3', 64).setOrigin(0.5).setTint(0xff00ff).setBlendMode('SCREEN');
-        let title03 = this.add.bitmapText(centerX, centerY, 'gem', 'PADDLE PARKOUR P3', 64).setOrigin(0.5).setTint(0xffff00).setBlendMode('ADD');
-       
-        this.add.bitmapText(centerX, centerY + textSpacer, 'gem', 'Use the UP & DOWN ARROWS to dodge color paddles', 24).setOrigin(0.5);
-        this.add.bitmapText(centerX, centerY + textSpacer*3, 'gem', 'Press UP ARROW to Start', 36).setOrigin(0.5);
-        this.add.bitmapText(centerX, h - textSpacer, 'gem', 'Nathan Altice 2020', 16).setOrigin(0.5);
 
-        // title text tween
-        this.tweens.add({
-            targets: title01,
-            duration: 2500,
-            angle: { from: -1, to: 1 },
-            yoyo: true,
-            repeat: -1,
-            onYoyo: function() {
-                this.cameras.main.shake(100, 0.0025);
-            },
-            onYoyoScope: this
-        });
-        this.tweens.add({
-            targets: title02,
-            duration: 2500,
-            angle: { from: 1, to: -1 },
-            yoyo: true,
-            repeat: -1,
-            onRepeat: function() {
-                this.cameras.main.shake(100, 0.0025);
-            },
-            onRepeatScope: this
-        });
+        this.sky = this.add.tileSprite(0, 0, 960, 640, 'sky').setOrigin(0, 0);
+        this.clouds = this.add.tileSprite(0, 0, 960, 640, 'clouds').setOrigin(0, 0);
+        this.mountains = this.add.tileSprite(0, 0, 960, 640, 'mountains').setOrigin(0, 0);
+        this.trees1 = this.add.tileSprite(0, 0, 960, 640, 'trees1').setOrigin(0, 0);
+        this.trees2 = this.add.tileSprite(0, 0, 960, 640, 'trees2').setOrigin(0, 0);
 
-        // set up cursor keys
-        cursors = this.input.keyboard.createCursorKeys();  
+        //this.add.image(0, 0, 'bar').setOrigin(0, 0);
+
+        // menu text configuration
+        let menuConfig = {
+            fontFamily: 'Courier',
+            fontSize: '28px',
+            backgroundColor: '#F3B141',
+            color: '#843605',
+            align: 'right',
+            padding:{
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 0
+        }
+
+        // show menu text
+        //this.add.text(game.config.width/2, game.config.height/2 - borderUISize -
+        //borderPadding, 'ROCKET PATROL', menuConfig).setOrigin(0.5);
+        //this.add.text(game.config.width/2, game.config.height/2, 'Use <--> arrows to move & (F) to fire', menuConfig).setOrigin(0.5);
+        menuConfig.backgroundColor = '#00FF00';
+        menuConfig.color = '#000';
+        //this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'Press <- for Novice or -> for Expert',
+        //menuConfig).setOrigin(0.5);
+        //this.mainback = this.add.tileSprite(0, 0, 640, 480, 'mainback').setOrigin(0, 0);
+
+        keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
     }
 
     update() {
-        // check for UP input
-        if (Phaser.Input.Keyboard.JustDown(cursors.up)) {
-            let textureManager = this.textures;
-            // take snapshot of the entire game viewport
-            // https://newdocs.phaser.io/docs/3.54.0/Phaser.Renderer.WebGL.WebGLRenderer#snapshot
-            // .snapshot(callback, type, encoderOptions)
-            this.game.renderer.snapshot((image) => {
-                // make sure an existing texture w/ that key doesn't already exist
-                if(textureManager.exists('titlesnapshot')) {
-                    textureManager.remove('titlesnapshot');
-                }
-                // take the snapshot img returned from callback and add to texture manager
-                textureManager.addImage('titlesnapshot', image);
-            });
-            
-            // start next scene
-            this.scene.start('playScene');
+        if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+          // easy mode
+          game.settings = {
+            spaceshipSpeed: 3,
+            gameTimer: 60000,   
+          }
+          this.sound.play('sfx_select');
+          this.scene.start('playScene');    
         }
+        if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
+          // hard mode
+          game.settings = {
+            spaceshipSpeed: 4,
+            gameTimer: 45000   
+          }
+          this.sound.play('sfx_select');
+          this.scene.start('playScene'); 
+        }
+
+      }
     }
-}

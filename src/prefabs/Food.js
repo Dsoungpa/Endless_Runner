@@ -23,7 +23,7 @@ class Food extends Phaser.GameObjects.Sprite {
     }
 
     speed() {
-        if (this.moveSpeed <= 8){
+        if (this.moveSpeed <= 6){
             this.moveSpeed += 2;
         }
         

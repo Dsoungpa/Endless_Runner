@@ -5,10 +5,16 @@ class Play extends Phaser.Scene {
     
 
     preload(){
+        // load audio
+        this.load.audio('eat', './assets/audio/eat.mp3');
+        this.load.audio('hurt', './assets/audio/hitnoise.mp3');
+        this.load.audio('background', './assets/audio/dragonMusic.mp3');
+
         // load player
         this.load.image('dragon', './assets/img/Dragon.png');
         // load food
         this.load.image('food', './assets/img/DaBabyCar2.png');
+        this.load.image('SM', './assets/img/SniperMonkey.png');
         this.load.image('sky', './assets/img/Sky.png');
         this.load.image('clouds', './assets/img/Clouds.png');
         this.load.image('mountains', './assets/img/Mountains.png');
@@ -20,7 +26,10 @@ class Play extends Phaser.Scene {
     }
 
     create(){
-        
+        let backgroundMusic = this.sound.add('background');
+        backgroundMusic.loop = true;
+        backgroundMusic.play();
+
         //parallax background this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').setOrigin(0, 0);
         this.sky = this.add.tileSprite(0, 0, 960, 640, 'sky').setOrigin(0, 0);
         this.clouds = this.add.tileSprite(0, 0, 960, 640, 'clouds').setOrigin(0, 0);
@@ -28,7 +37,7 @@ class Play extends Phaser.Scene {
         this.trees1 = this.add.tileSprite(0, 0, 960, 640, 'trees1').setOrigin(0, 0);
         this.trees2 = this.add.tileSprite(0, 0, 960, 640, 'trees2').setOrigin(0, 0);
 
-        this.add.image(0, 0, 'bar').setOrigin(0, 0)
+        this.add.image(0, 0, 'bar').setOrigin(0, 0);
 
         // health display
         healthDisplay = this.add.text(borderUISize + borderPadding * 32.5 - 100, borderUISize + borderPadding * 2 - 50, "Health: " + health, healthConfig);  
@@ -56,9 +65,18 @@ class Play extends Phaser.Scene {
         this.food1 = new Food(this, 800, random1, 'food', false).setOrigin(0.5, 0);
         this.food2 = new Food(this, 800, random2, 'food', false).setOrigin(0.5, 0);
         this.food3 = new Food(this, 800, random3, 'food', false).setOrigin(0.5, 0);
-        this.poison = new Food(this, 800, random4, 'food', false).setOrigin(0.5, 0);
+        this.poison = new Food(this, 800, random4, 'SM', false).setOrigin(0.5, 0);
 
-         
+        
+
+        let minusTime = setInterval(updateTime, 1000);
+
+        function updateTime(){
+            console.log("In here");
+            if(time > 0){
+                time--;
+            }
+        }
 
         let minushealth = setInterval(mhealth, 1000);
 
@@ -116,6 +134,61 @@ class Play extends Phaser.Scene {
 
     update(){
         //background movement
+
+        if(time == 0 && made == false){
+            var random5 = Phaser.Math.Between(1, 600);
+            var random6 = Phaser.Math.Between(1, 600);
+            this.poison2 = new Food(this, 1000, random5, 'SM', false).setOrigin(0.5, 0);
+            this.poison3 = new Food(this, 1000, random6, 'SM', false).setOrigin(0.5, 0);
+            made = true;
+            this.food2.destroy();
+        }
+
+        if(made == true){
+            this.poison2.update();
+            this.poison3.update();
+
+            if(this.checkCollision(this.p1, this.poison2)) {
+                this.sound.play("hurt");
+                if (health>= 100){
+                    health = 100;
+                    healthDisplay.text = "Health: " + health;
+                }
+                if (health > 0) {
+                    health += 5;
+                    healthDisplay.text = "Health: " + health;
+
+                }else{
+                    console.log("GameOver");
+                    health = 0;
+                    healthDisplay.text = "Health: " + health;
+                    this.scene.pause("playScene");
+                    this.game.sound.stopAll();
+                }
+                this.poison2.reset();
+            }
+
+            if(this.checkCollision(this.p1, this.poison3)) {
+                this.sound.play("hurt");
+                if (health>= 100){
+                    health = 100;
+                    healthDisplay.text = "Health: " + health;
+                }
+                if (health > 0) {
+                    health += 5;
+                    healthDisplay.text = "Health: " + health;
+
+                }else{
+                    console.log("GameOver");
+                    health = 0;
+                    healthDisplay.text = "Health: " + health;
+                    this.scene.pause("playScene");
+                    this.game.sound.stopAll();
+                }
+                this.poison3.reset();
+            }
+        }
+
         this.clouds.tilePositionX += 1.25;
         this.mountains.tilePositionX += 1;
         this.trees1.tilePositionX += 1.5;
@@ -132,11 +205,13 @@ class Play extends Phaser.Scene {
             health = 0;
             healthDisplay.text = "Health: " + health;
             this.scene.pause("playScene");
+            this.game.sound.stopAll();
         }
 
         //this.p1.y = game.input.mousePointer.y;
         
         if(this.checkCollision(this.p1, this.food1)) {
+            this.sound.play("eat");
             if (health>= 100){
                 health = 100;
                 healthDisplay.text = "Health: " + health;
@@ -150,11 +225,13 @@ class Play extends Phaser.Scene {
                 health = 0;
                 healthDisplay.text = "Health: " + health;
                 this.scene.pause("playScene");
+                this.game.sound.stopAll();
             }
             this.food1.reset();
         }
 
         if(this.checkCollision(this.p1, this.food2)) {
+            this.sound.play("eat");
             if (health>= 100){
                 health = 100;
                 healthDisplay.text = "Health: " + health;
@@ -168,11 +245,13 @@ class Play extends Phaser.Scene {
                 health = 0;
                 healthDisplay.text = "Health: " + health;
                 this.scene.pause("playScene");
+                this.game.sound.stopAll();
             }
             this.food2.reset();
         }
 
         if(this.checkCollision(this.p1, this.food3)) {
+            this.sound.play("eat");
             if (health>= 100){
                 health = 100;
                 healthDisplay.text = "Health: " + health;
@@ -187,12 +266,13 @@ class Play extends Phaser.Scene {
                 health = 0;
                 healthDisplay.text = "Health: " + health;
                 this.scene.pause("playScene");
+                this.game.sound.stopAll();
             }
             this.food3.reset();
         }
 
         if(this.checkCollision(this.p1, this.poison)) {
-
+            this.sound.play("hurt");
             if (health>= 100){
                 health = 100;
                 healthDisplay.text = "Health: " + health;
@@ -206,6 +286,7 @@ class Play extends Phaser.Scene {
                 health = 0;
                 healthDisplay.text = "Health: " + health;
                 this.scene.pause("playScene");
+                this.game.sound.stopAll();
             }
             this.poison.reset();
         }
