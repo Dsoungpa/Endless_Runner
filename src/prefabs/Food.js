@@ -32,7 +32,7 @@ class Food extends Phaser.GameObjects.Sprite {
     // position resets random
     reset() {
         this.x = game.config.width;
-        var random = Phaser.Math.Between(1, 600);
+        var random = Phaser.Math.Between(100, 600);
         this.y = random;
         
         this.count = this.count + 1;

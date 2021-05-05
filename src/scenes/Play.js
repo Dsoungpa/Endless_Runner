@@ -57,15 +57,15 @@ class Play extends Phaser.Scene {
 
         // adds Food to the Game
         // initial random food
-        var random1 = Phaser.Math.Between(1, 600);
-        var random2 = Phaser.Math.Between(1, 600);
-        var random3 = Phaser.Math.Between(1, 600);
-        var random4 = Phaser.Math.Between(1, 600);
+        var random1 = Phaser.Math.Between(100, 150);
+        var random2 = Phaser.Math.Between(200, 300);
+        var random3 = Phaser.Math.Between(350, 450);
+        var random4 = Phaser.Math.Between(500, 600);
 
         this.food1 = new Food(this, 800, random1, 'food', false).setOrigin(0.5, 0);
         this.food2 = new Food(this, 800, random2, 'food', false).setOrigin(0.5, 0);
         this.food3 = new Food(this, 800, random3, 'food', false).setOrigin(0.5, 0);
-        this.poison = new Food(this, 800, random4, 'SM', false).setOrigin(0.5, 0);
+        this.poison = new Food(this, 800, 100, 'SM', false).setOrigin(0.5, 0);
 
         
 
@@ -136,17 +136,18 @@ class Play extends Phaser.Scene {
         //background movement
 
         if(time == 0 && made == false){
-            var random5 = Phaser.Math.Between(1, 600);
-            var random6 = Phaser.Math.Between(1, 600);
+            var random5 = Phaser.Math.Between(100, 300);
+            var random6 = Phaser.Math.Between(300, 600);
             this.poison2 = new Food(this, 1000, random5, 'SM', false).setOrigin(0.5, 0);
             this.poison3 = new Food(this, 1000, random6, 'SM', false).setOrigin(0.5, 0);
             made = true;
-            this.food2.destroy();
         }
 
         if(made == true){
             this.poison2.update();
             this.poison3.update();
+            this.poison2.moveSpeed = 6;
+            this.poison3.moveSpeed = 6;
 
             if(this.checkCollision(this.p1, this.poison2)) {
                 this.sound.play("hurt");
@@ -155,7 +156,7 @@ class Play extends Phaser.Scene {
                     healthDisplay.text = "Health: " + health;
                 }
                 if (health > 0) {
-                    health += 5;
+                    health -= 5;
                     healthDisplay.text = "Health: " + health;
 
                 }else{
@@ -175,7 +176,7 @@ class Play extends Phaser.Scene {
                     healthDisplay.text = "Health: " + health;
                 }
                 if (health > 0) {
-                    health += 5;
+                    health -= 5;
                     healthDisplay.text = "Health: " + health;
 
                 }else{
