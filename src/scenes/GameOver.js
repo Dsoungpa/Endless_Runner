@@ -3,6 +3,8 @@ class GameOver extends Phaser.Scene {
         super('gameOverScene');
     }
 
+    
+
     create() {
         // check for high score in local storage
         // uncomment console.log statements if you need to debug local storage

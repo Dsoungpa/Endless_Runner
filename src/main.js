@@ -1,8 +1,12 @@
-// Paddle Parkour P3
-// An endless dodging game
-// Barrier prefab adapted from Travis Faas, An Introduction to HTML5 Game Development with Phaser.js (2017)
-// Original: 4/20/17 (Phaser CE version)
-// Updated: 4/23/21
+// Names: Luis Garcia, Dylan Soungpanya, Bemister Tessema
+// Game Title: Dragon Speed
+// Date Completed: 5/5/2021
+// Creative Tilt: We implemented programming that allows the player to hit something and either gain
+// or lose health. We implemented how to randomly spawn these items within certain boundaries and we were able
+// to make 2 different items that affect the player's health variable. We also implemented a timer within the game 
+// that increases amount of "bombs" spawned depending how far the player makes it. 
+// We decided to go with pixel art for our visuals and we went with a medieval theme which we think goes nice
+// with the player's character which is a dragon.
 
 // keep me honest
 'use strict';
@@ -11,7 +15,7 @@ let healthDisplay;
 let healthConfig = {
     fontFamily: 'Courier',
     fontSize: '20px',
-    backgroundColor: '#8DC63F',
+    backgroundColor: '#c62426',
     color: '#FFFFFF',
     align: 'right',
     padding:{
@@ -41,7 +45,7 @@ let config = {
             }
         }
     },
-    scene: [ Load, Title, Play, GameOver ]
+    scene: [ Load, Title, Play, HowToPlay, GameOver, Over ]
 }
 
 // uncomment the following line if you need to purge local storage data
@@ -70,3 +74,7 @@ let newHighScore = false;
 let cursors;
 let time = 15;
 let made = false;
+let over = false;
+let keyR;
+let keySPACE;
+let overSprite

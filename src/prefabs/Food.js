@@ -2,7 +2,7 @@ class Food extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, texture, frame, pointValue) {
         super(scene, x, y, texture, frame);
         scene.add.existing(this);   // add to existing scene
-        this.moveSpeed = 4;
+        this.moveSpeed = 20;
         this.count = 0;
     }
 
@@ -23,7 +23,7 @@ class Food extends Phaser.GameObjects.Sprite {
     }
 
     speed() {
-        if (this.moveSpeed <= 6){
+        if (this.moveSpeed <= 24){
             this.moveSpeed += 2;
         }
         

@@ -6,26 +6,28 @@ class Play extends Phaser.Scene {
 
     preload(){
         // load audio
-        this.load.audio('eat', './assets/audio/eat.mp3');
-        this.load.audio('hurt', './assets/audio/hitnoise.mp3');
+        this.load.audio('eat', './assets/audio/Eating.wav');
+        this.load.audio('hurt', './assets/audio/PoisonAudio.wav');
         this.load.audio('background', './assets/audio/dragonMusic.mp3');
 
         // load player
         this.load.image('dragon', './assets/img/Dragon.png');
         // load food
-        this.load.image('food', './assets/img/DaBabyCar2.png');
-        this.load.image('SM', './assets/img/SniperMonkey.png');
+        this.load.image('food', './assets/img/Sheep.png');
+        this.load.image('bomb', './assets/img/Bomb.png');
         this.load.image('sky', './assets/img/Sky.png');
         this.load.image('clouds', './assets/img/Clouds.png');
         this.load.image('mountains', './assets/img/Mountains.png');
         this.load.image('trees1', './assets/img/Trees1.png');
         this.load.image('trees2', './assets/img/Trees2.png');
         this.load.image('bar', './assets/img/HealthBar.png');
+        this.load.image('fin', './assets/img/GameOver.png');
         //load dragon
         this.load.spritesheet('dragon2', './assets/img/DragonSprite.png', {frameWidth: 75, frameHeight: 66, startFrame: 1, endFrame: 5});
     }
 
     create(){
+
         let backgroundMusic = this.sound.add('background');
         backgroundMusic.loop = true;
         backgroundMusic.play();
@@ -38,9 +40,10 @@ class Play extends Phaser.Scene {
         this.trees2 = this.add.tileSprite(0, 0, 960, 640, 'trees2').setOrigin(0, 0);
 
         this.add.image(0, 0, 'bar').setOrigin(0, 0);
+        
 
         // health display
-        healthDisplay = this.add.text(borderUISize + borderPadding * 32.5 - 100, borderUISize + borderPadding * 2 - 50, "Health: " + health, healthConfig);  
+        healthDisplay = this.add.text(borderUISize + borderPadding * 32.5 + 250, borderUISize + borderPadding * 2 - 36, "Health: " + health, healthConfig);  
 
         // dragon
         // const p1 = this.add.sprite(100, 100, 'dragon2', 0);
@@ -58,14 +61,14 @@ class Play extends Phaser.Scene {
         // adds Food to the Game
         // initial random food
         var random1 = Phaser.Math.Between(100, 150);
-        var random2 = Phaser.Math.Between(200, 300);
+        var random2 = Phaser.Math.Between(250, 300);
         var random3 = Phaser.Math.Between(350, 450);
         var random4 = Phaser.Math.Between(500, 600);
 
         this.food1 = new Food(this, 800, random1, 'food', false).setOrigin(0.5, 0);
         this.food2 = new Food(this, 800, random2, 'food', false).setOrigin(0.5, 0);
         this.food3 = new Food(this, 800, random3, 'food', false).setOrigin(0.5, 0);
-        this.poison = new Food(this, 800, 100, 'SM', false).setOrigin(0.5, 0);
+        this.poison = new Food(this, 800, 100, 'bomb', false).setOrigin(0.5, 0);
 
         
 
@@ -95,18 +98,18 @@ class Play extends Phaser.Scene {
 
         let meterConfig = {
            fontFamily: 'Courier',
-           fontSize: '24px',
-           backgroundColor: '#0d00ff',
-           color: '#000',
+           fontSize: '20px',
+           backgroundColor: '#c62426',
+           color: '#ffffff',
            align: 'center',
            padding:{
                top: 5,
                bottom: 5,
            },
-           fixedWidth: 200
+           fixedWidth: 0
        }
        
-       meterDisplay = this.add.text(borderUISize + borderPadding * 23, borderUISize + borderPadding, "METERS: " + meter, meterConfig);   
+       meterDisplay = this.add.text(borderUISize + borderPadding * 23 + 32, borderUISize + borderPadding - 20, "METERS: " + meter, meterConfig);   
 
        let minusmeter = setInterval(updatemeter, meterspeed);
        
@@ -129,25 +132,27 @@ class Play extends Phaser.Scene {
         function speed() {
             meterspeed -= 100;
         }
+
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         
     }
 
     update(){
-        //background movement
 
         if(time == 0 && made == false){
             var random5 = Phaser.Math.Between(100, 300);
             var random6 = Phaser.Math.Between(300, 600);
-            this.poison2 = new Food(this, 1000, random5, 'SM', false).setOrigin(0.5, 0);
-            this.poison3 = new Food(this, 1000, random6, 'SM', false).setOrigin(0.5, 0);
+            this.poison2 = new Food(this, 1000, random5, 'bomb', false).setOrigin(0.5, 0);
+            this.poison3 = new Food(this, 1000, random6, 'bomb', false).setOrigin(0.5, 0);
             made = true;
         }
 
         if(made == true){
             this.poison2.update();
             this.poison3.update();
-            this.poison2.moveSpeed = 6;
-            this.poison3.moveSpeed = 6;
+            this.poison2.moveSpeed = 24;
+            this.poison3.moveSpeed = 24;
 
             if(this.checkCollision(this.p1, this.poison2)) {
                 this.sound.play("hurt");
@@ -163,8 +168,9 @@ class Play extends Phaser.Scene {
                     console.log("GameOver");
                     health = 0;
                     healthDisplay.text = "Health: " + health;
-                    this.scene.pause("playScene");
                     this.game.sound.stopAll();
+                    this.scene.pause();
+                    //this.scene.start("overScene");
                 }
                 this.poison2.reset();
             }
@@ -183,8 +189,9 @@ class Play extends Phaser.Scene {
                     console.log("GameOver");
                     health = 0;
                     healthDisplay.text = "Health: " + health;
-                    this.scene.pause("playScene");
                     this.game.sound.stopAll();
+                    this.scene.pause();
+                    //this.scene.start("overScene");
                 }
                 this.poison3.reset();
             }
@@ -205,8 +212,9 @@ class Play extends Phaser.Scene {
             console.log("GameOver");
             health = 0;
             healthDisplay.text = "Health: " + health;
-            this.scene.pause("playScene");
             this.game.sound.stopAll();
+            this.scene.pause();
+            //this.scene.start("overScene");
         }
 
         //this.p1.y = game.input.mousePointer.y;
@@ -225,8 +233,9 @@ class Play extends Phaser.Scene {
                 console.log("GameOver");
                 health = 0;
                 healthDisplay.text = "Health: " + health;
-                this.scene.pause("playScene");
                 this.game.sound.stopAll();
+                this.scene.pause();
+                //this.scene.start("overScene");
             }
             this.food1.reset();
         }
@@ -245,8 +254,9 @@ class Play extends Phaser.Scene {
                 console.log("GameOver");
                 health = 0;
                 healthDisplay.text = "Health: " + health;
-                this.scene.pause("playScene");
                 this.game.sound.stopAll();
+                this.scene.pause();
+                //this.scene.start("overScene");
             }
             this.food2.reset();
         }
@@ -266,8 +276,9 @@ class Play extends Phaser.Scene {
                 console.log("GameOver");
                 health = 0;
                 healthDisplay.text = "Health: " + health;
-                this.scene.pause("playScene");
                 this.game.sound.stopAll();
+                this.scene.pause();
+                //this.scene.start("overScene");
             }
             this.food3.reset();
         }
@@ -286,12 +297,12 @@ class Play extends Phaser.Scene {
                 console.log("GameOver");
                 health = 0;
                 healthDisplay.text = "Health: " + health;
-                this.scene.pause("playScene");
                 this.game.sound.stopAll();
+                this.scene.pause();
+                //this.scene.start("overScene");
             }
             this.poison.reset();
         }
-    
     }
 
     // checking collision

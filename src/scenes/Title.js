@@ -7,22 +7,12 @@ class Title extends Phaser.Scene {
         // load audio
         this.load.audio('sfx_select', './assets/audio/sound.mp3');
         this.load.image('sky', './assets/img/Sky.png');
-        this.load.image('clouds', './assets/img/Clouds.png');
-        this.load.image('mountains', './assets/img/Mountains.png');
-        this.load.image('trees1', './assets/img/Trees1.png');
-        this.load.image('trees2', './assets/img/Trees2.png');
-        this.load.image('bar', './assets/img/HealthBar.png');
+        this.load.image('mainmenu', './assets/img/MainMenu.png');
     }
 
     create() {
 
-        this.sky = this.add.tileSprite(0, 0, 960, 640, 'sky').setOrigin(0, 0);
-        this.clouds = this.add.tileSprite(0, 0, 960, 640, 'clouds').setOrigin(0, 0);
-        this.mountains = this.add.tileSprite(0, 0, 960, 640, 'mountains').setOrigin(0, 0);
-        this.trees1 = this.add.tileSprite(0, 0, 960, 640, 'trees1').setOrigin(0, 0);
-        this.trees2 = this.add.tileSprite(0, 0, 960, 640, 'trees2').setOrigin(0, 0);
-
-        //this.add.image(0, 0, 'bar').setOrigin(0, 0);
+        this.sky = this.add.tileSprite(0, 0, 960, 640, 'mainmenu').setOrigin(0, 0);
 
         // menu text configuration
         let menuConfig = {
@@ -54,20 +44,10 @@ class Title extends Phaser.Scene {
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
-          // easy mode
-          game.settings = {
-            spaceshipSpeed: 3,
-            gameTimer: 60000,   
-          }
           this.sound.play('sfx_select');
-          this.scene.start('playScene');    
+          this.scene.start('howtoplayScene');    
         }
         if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
-          // hard mode
-          game.settings = {
-            spaceshipSpeed: 4,
-            gameTimer: 45000   
-          }
           this.sound.play('sfx_select');
           this.scene.start('playScene'); 
         }
