@@ -10,7 +10,7 @@ let health = 100;
 let healthDisplay;
 let healthConfig = {
     fontFamily: 'Courier',
-    fontSize: '18px',
+    fontSize: '20px',
     backgroundColor: '#8DC63F',
     color: '#FFFFFF',
     align: 'right',
@@ -18,7 +18,7 @@ let healthConfig = {
         top: 5,
         bottom: 5,
     },
-    fixedWidth: 117
+    fixedWidth: 130
 }
         
     
