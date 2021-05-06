@@ -22,8 +22,9 @@ class Play extends Phaser.Scene {
         this.load.image('trees2', './assets/img/Trees2.png');
         this.load.image('bar', './assets/img/HealthBar.png');
         this.load.image('fin', './assets/img/GameOver.png');
+        //this.load.atlas("dragon2", "./assets/img/Dragon2.png", "./assets/img/Dragon2.json");
         //load dragon
-        this.load.spritesheet('dragon2', './assets/img/DragonSprite.png', {frameWidth: 75, frameHeight: 66, startFrame: 1, endFrame: 5});
+        //this.load.spritesheet('dragon2', './assets/img/DragonSprite.png', {frameWidth: 75, frameHeight: 66, startFrame: 1, endFrame: 5});
     }
 
     create(){
@@ -56,7 +57,35 @@ class Play extends Phaser.Scene {
         //  p1.play('fly');
 
         // adds Dragon to the Game
-        this.p1 = new Dragon(this, 100, game.config.height - borderUISize - borderPadding - 30, 'dragon2' , false).setOrigin(0.5, 0);
+        this.p1 = new Dragon(this, 100, game.config.height - borderUISize - borderPadding - 30, 'dragon2').setOrigin(0.5, 0);
+
+        var frameNames = this.textures.get('dragon2').getFrameNames();
+        //console.log(frameNames);
+        this.anims.create({
+            key: 'fly',
+            frames: [{
+            key: "dragon2",
+            frame: "Dragon 0.aseprite"
+            }, {
+            key: "dragon2",
+            frame: "Dragon 1.aseprite"
+            }, {
+            key: "dragon2",
+            frame: "Dragon 2.aseprite"
+            }, {
+            key: "dragon2",
+            frame: "Dragon 3.aseprite"
+            }, {
+            key: "dragon2",
+            frame: "Dragon 4.aseprite"
+            }, {
+            key: "dragon2",
+            frame: "Dragon 5.aseprite"
+            }],
+            frameRate: 14,
+            repeat: -1
+        });
+        this.p1.play("fly");
 
         // adds Food to the Game
         // initial random food

@@ -8,11 +8,45 @@ class Title extends Phaser.Scene {
       this.load.audio('sfx_select', './assets/audio/sound.mp3');
       this.load.image('sky', './assets/img/Sky.png');
       this.load.image('mainmenu', './assets/img/MainMenu.png');
+      
+
+      this.load.atlas("dragon2", "./assets/img/Dragon2.png", "./assets/img/Dragon2.json");
+
   }
 
   create() {
 
       this.sky = this.add.tileSprite(0, 0, 960, 640, 'mainmenu').setOrigin(0, 0);
+      this.dragon2 = this.add.sprite(111, 100, "dragon2");
+
+      var frameNames = this.textures.get('dragon2').getFrameNames();
+      //console.log(frameNames);
+
+      this.anims.create({
+        key: 'fly',
+        frames: [{
+          key: "dragon2",
+          frame: "Dragon 0.aseprite"
+        }, {
+          key: "dragon2",
+          frame: "Dragon 1.aseprite"
+        }, {
+          key: "dragon2",
+          frame: "Dragon 2.aseprite"
+        }, {
+          key: "dragon2",
+          frame: "Dragon 3.aseprite"
+        }, {
+          key: "dragon2",
+          frame: "Dragon 4.aseprite"
+        }, {
+          key: "dragon2",
+          frame: "Dragon 5.aseprite"
+        }],
+        frameRate: 14,
+        repeat: -1
+      });
+      this.dragon2.play("fly");
 
       // menu text configuration
       let menuConfig = {

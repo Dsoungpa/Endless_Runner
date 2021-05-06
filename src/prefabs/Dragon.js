@@ -9,12 +9,11 @@ class Dragon extends Phaser.GameObjects.Sprite{
 
     preload(){
         // load player
-        this.load.image('dragon', './assets/img/Dragon.png');
-        this.load.spritesheet('dragon2', './assets/img/DragonSprite.png', {frameWidth: 75, frameHeight: 66, startFrame: 1, endFrame: 5});
+        //this.load.image('dragon', './assets/img/Dragon.png');
     }
 
     create(){
-       
+        
     }
 
     update(){
