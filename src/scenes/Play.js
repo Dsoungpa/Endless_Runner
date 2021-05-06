@@ -8,7 +8,7 @@ class Play extends Phaser.Scene {
         // load audio
         this.load.audio('eat', './assets/audio/Eating.wav');
         this.load.audio('hurt', './assets/audio/PoisonAudio.wav');
-        this.load.audio('background', './assets/audio/dragonMusic.mp3');
+        this.load.audio('background', './assets/audio/Dylan_8bit.wav');
 
         // load player
         this.load.image('dragon', './assets/img/Dragon.png');
@@ -81,7 +81,7 @@ class Play extends Phaser.Scene {
             }
         }
 
-        let minushealth = setInterval(mhealth, 1000);
+        minushealth = setInterval(mhealth, 1000);
 
         function mhealth(){
             console.log("In here");
@@ -169,7 +169,6 @@ class Play extends Phaser.Scene {
                     health = 0;
                     healthDisplay.text = "Health: " + health;
                     this.game.sound.stopAll();
-                    this.scene.pause();
                     //this.scene.start("overScene");
                 }
                 this.poison2.reset();
@@ -190,7 +189,6 @@ class Play extends Phaser.Scene {
                     health = 0;
                     healthDisplay.text = "Health: " + health;
                     this.game.sound.stopAll();
-                    this.scene.pause();
                     //this.scene.start("overScene");
                 }
                 this.poison3.reset();
@@ -213,7 +211,16 @@ class Play extends Phaser.Scene {
             health = 0;
             healthDisplay.text = "Health: " + health;
             this.game.sound.stopAll();
-            this.scene.pause();
+            this.add.image(0, 0, 'fin').setOrigin(0, 0);
+            clearInterval(minushealth);
+            if (Phaser.Input.Keyboard.JustDown(keyR)) {
+                health = 100;
+                this.scene.restart();
+            }
+            if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
+                health = 100;
+                this.scene.start("titleScene");
+            }
             //this.scene.start("overScene");
         }
 
@@ -234,7 +241,6 @@ class Play extends Phaser.Scene {
                 health = 0;
                 healthDisplay.text = "Health: " + health;
                 this.game.sound.stopAll();
-                this.scene.pause();
                 //this.scene.start("overScene");
             }
             this.food1.reset();
@@ -255,7 +261,6 @@ class Play extends Phaser.Scene {
                 health = 0;
                 healthDisplay.text = "Health: " + health;
                 this.game.sound.stopAll();
-                this.scene.pause();
                 //this.scene.start("overScene");
             }
             this.food2.reset();
@@ -277,7 +282,6 @@ class Play extends Phaser.Scene {
                 health = 0;
                 healthDisplay.text = "Health: " + health;
                 this.game.sound.stopAll();
-                this.scene.pause();
                 //this.scene.start("overScene");
             }
             this.food3.reset();
@@ -298,7 +302,6 @@ class Play extends Phaser.Scene {
                 health = 0;
                 healthDisplay.text = "Health: " + health;
                 this.game.sound.stopAll();
-                this.scene.pause();
                 //this.scene.start("overScene");
             }
             this.poison.reset();

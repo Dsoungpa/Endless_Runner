@@ -77,4 +77,4 @@ let made = false;
 let over = false;
 let keyR;
 let keySPACE;
-let overSprite
+let minushealth;

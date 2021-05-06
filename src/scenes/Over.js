@@ -20,10 +20,14 @@ class Over extends Phaser.Scene {
     update() {
         if (Phaser.Input.Keyboard.JustDown(keyR)) {
             this.sound.play('sfx_select');
+            health = 100;
+            meter = 0;
             this.scene.start('playScene');    
           }
           if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
             this.sound.play('sfx_select');
+            health = 100;
+            meter = 0;
             this.scene.start('titleScene'); 
           }
     }
