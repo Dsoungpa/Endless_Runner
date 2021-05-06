@@ -169,6 +169,16 @@ class Play extends Phaser.Scene {
                     health = 0;
                     healthDisplay.text = "Health: " + health;
                     this.game.sound.stopAll();
+                    this.add.image(0, 0, 'fin').setOrigin(0, 0);
+                    clearInterval(minushealth);
+                    if (Phaser.Input.Keyboard.JustDown(keyR)) {
+                        health = 100;
+                        this.scene.restart();
+                    }
+                    if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
+                        health = 100;
+                        this.scene.start("titleScene");
+                    }
                     //this.scene.start("overScene");
                 }
                 this.poison2.reset();
@@ -189,6 +199,16 @@ class Play extends Phaser.Scene {
                     health = 0;
                     healthDisplay.text = "Health: " + health;
                     this.game.sound.stopAll();
+                    this.add.image(0, 0, 'fin').setOrigin(0, 0);
+                    clearInterval(minushealth);
+                    if (Phaser.Input.Keyboard.JustDown(keyR)) {
+                        health = 100;
+                        this.scene.restart();
+                    }
+                    if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
+                        health = 100;
+                        this.scene.start("titleScene");
+                    }
                     //this.scene.start("overScene");
                 }
                 this.poison3.reset();
@@ -241,6 +261,16 @@ class Play extends Phaser.Scene {
                 health = 0;
                 healthDisplay.text = "Health: " + health;
                 this.game.sound.stopAll();
+                this.add.image(0, 0, 'fin').setOrigin(0, 0);
+                clearInterval(minushealth);
+                if (Phaser.Input.Keyboard.JustDown(keyR)) {
+                    health = 100;
+                    this.scene.restart();
+                }
+                if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
+                    health = 100;
+                    this.scene.start("titleScene");
+                }
                 //this.scene.start("overScene");
             }
             this.food1.reset();
@@ -261,6 +291,16 @@ class Play extends Phaser.Scene {
                 health = 0;
                 healthDisplay.text = "Health: " + health;
                 this.game.sound.stopAll();
+                this.add.image(0, 0, 'fin').setOrigin(0, 0);
+                clearInterval(minushealth);
+                if (Phaser.Input.Keyboard.JustDown(keyR)) {
+                    health = 100;
+                    this.scene.restart();
+                }
+                if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
+                    health = 100;
+                    this.scene.start("titleScene");
+                }
                 //this.scene.start("overScene");
             }
             this.food2.reset();
@@ -282,6 +322,16 @@ class Play extends Phaser.Scene {
                 health = 0;
                 healthDisplay.text = "Health: " + health;
                 this.game.sound.stopAll();
+                this.add.image(0, 0, 'fin').setOrigin(0, 0);
+                clearInterval(minushealth);
+                if (Phaser.Input.Keyboard.JustDown(keyR)) {
+                    health = 100;
+                    this.scene.restart();
+                }
+                if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
+                    health = 100;
+                    this.scene.start("titleScene");
+                }
                 //this.scene.start("overScene");
             }
             this.food3.reset();
@@ -302,6 +352,16 @@ class Play extends Phaser.Scene {
                 health = 0;
                 healthDisplay.text = "Health: " + health;
                 this.game.sound.stopAll();
+                this.add.image(0, 0, 'fin').setOrigin(0, 0);
+                clearInterval(minushealth);
+                if (Phaser.Input.Keyboard.JustDown(keyR)) {
+                    health = 100;
+                    this.scene.restart();
+                }
+                if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
+                    health = 100;
+                    this.scene.start("titleScene");
+                }
                 //this.scene.start("overScene");
             }
             this.poison.reset();
