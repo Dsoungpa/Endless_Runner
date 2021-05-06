@@ -22,7 +22,7 @@ class Play extends Phaser.Scene {
         this.load.image('trees2', './assets/img/Trees2.png');
         this.load.image('bar', './assets/img/HealthBar.png');
         this.load.image('fin', './assets/img/GameOver.png');
-        //this.load.atlas("dragon2", "./assets/img/Dragon2.png", "./assets/img/Dragon2.json");
+        this.load.atlas("dragon2", "./assets/img/Dragon2.png", "./assets/img/Dragon2.json");
         //load dragon
         //this.load.spritesheet('dragon2', './assets/img/DragonSprite.png', {frameWidth: 75, frameHeight: 66, startFrame: 1, endFrame: 5});
     }
